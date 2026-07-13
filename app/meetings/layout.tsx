@@ -1,39 +1,21 @@
-"use client";
+import NavLinks from "@/components/NavLinks";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/meetings", label: "Meetings" },
-  { href: "/meetings/current", label: "Current Meeting" },
-];
-
-export default function NavLinks() {
-  const pathname = usePathname();
-
+export default function MeetingsLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <nav>
-      <ul className="flex gap-6">
-        {links.map((link) => {
-          const isActive = pathname === link.href;
+    <section className="mx-auto max-w-6xl px-6 py-8">
+      <h1 className="mb-6 text-3xl font-bold text-blue-700">
+        Sacrament Meetings
+      </h1>
 
-          return (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={`rounded px-3 py-2 transition ${
-                  isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-700 hover:text-blue-600"
-                }`}
-              >
-                {link.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+      <div className="mb-8">
+        <NavLinks />
+      </div>
+
+      {children}
+    </section>
   );
 }

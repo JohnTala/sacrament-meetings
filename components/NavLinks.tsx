@@ -12,10 +12,7 @@ const links = [
     href: "/meetings",
     label: "Meetings",
   },
-  {
-    href: "/about",
-    label: "About",
-  },
+  
 ];
 
 export default function NavLinks() {
@@ -46,3 +43,5 @@ export default function NavLinks() {
     </nav>
   );
 }
+
+
