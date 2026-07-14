@@ -1,34 +1,8 @@
-import { headers } from "next/headers";
 import MeetingCard from "@/components/MeetingCard";
-import type { SacramentMeeting } from "@/lib/types";
-
-async function getMeetings() {
-  const headersList = await headers();
-  const host = headersList.get("host");
-
-  if (!host) {
-    throw new Error("Unable to determine host.");
-  }
-
-  const protocol =
-    process.env.NODE_ENV === "development" ? "http" : "https";
-
-  const response = await fetch(
-    `${protocol}://${host}/api/meetings`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to load meetings.");
-  }
-
-  return response.json() as Promise<SacramentMeeting[]>;
-}
+import { getMeetings } from "@/lib/meetings-db";
 
 export default async function MeetingsPage() {
-  const meetings = await getMeetings();
+  const meetings = getMeetings();
 
   return (
     <section>
