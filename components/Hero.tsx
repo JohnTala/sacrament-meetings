@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-10 text-center">
       <Image
-        src="/meeting-hero.jpg"
+        src="/sacrament-temple.jpg"
         alt="Members gathered for a sacrament meeting"
         width={1200}
         height={600}
