@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import MeetingDetail from "@/components/MeetingDetail";
 import type { SacramentMeeting } from "@/lib/types";
@@ -9,8 +10,18 @@ interface Props {
 }
 
 async function getMeeting(id: string) {
+  const headersList = await headers();
+  const host = headersList.get("host");
+
+  if (!host) {
+    throw new Error("Unable to determine host.");
+  }
+
+  const protocol =
+    process.env.NODE_ENV === "development" ? "http" : "https";
+
   const response = await fetch(
-    `http://localhost:3000/api/meetings/${id}`,
+    `${protocol}://${host}/api/meetings/${id}`,
     {
       cache: "no-store",
     }
