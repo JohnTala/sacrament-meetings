@@ -3,6 +3,7 @@ import { MeetingSearch } from '@/components/MeetingSearch';
 import { MeetingCard } from '@/components/MeetingCard';
 import { Pagination } from '@/components/Pagination';
 
+
 export default async function MeetingsPage(props: {
   searchParams?: Promise<{ query?: string; page?: string }>;
 }) {
