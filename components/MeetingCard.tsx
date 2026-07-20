@@ -5,7 +5,7 @@ interface MeetingCardProps {
   meeting: SacramentMeeting;
 }
 
-export default function MeetingCard({
+export function MeetingCard({
   meeting,
 }: MeetingCardProps) {
   return (
