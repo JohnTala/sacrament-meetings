@@ -22,7 +22,7 @@ export default async function MeetingsPage(props: {
       {/* Hero Section */}
       <section className="relative h-72 md:h-96">
         <Image
-          src="/sacrament-temple.jpg"
+          src="/sacrament-meeting.avif"
           alt="Sacrament Meeting"
           fill
           priority
