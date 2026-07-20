@@ -1,8 +1,9 @@
 export type MeetingType =
-  | 'testimony'
-  | 'regular'
-  | 'stake'
-  | 'general';
+  | "testimony"
+  | "regular"
+  | "stake"
+  | "general"
+  | "special";
 
 export interface Hymn {
   number: number;
@@ -12,7 +13,7 @@ export interface Hymn {
 export interface SpeakerItem {
   name: string;
   topic: string;
-  type: 'speaker' | 'musical-number';
+  type: "speaker" | "musical-number";
 }
 
 export interface WardBusinessItem {
@@ -21,7 +22,7 @@ export interface WardBusinessItem {
 
 export interface SacramentMeeting {
   id: number;
-  date: string;              // ISO date string: 'YYYY-MM-DD'
+  date: string; // ISO date string: 'YYYY-MM-DD'
   meetingType: MeetingType;
   presiding: string;
   conducting: string;

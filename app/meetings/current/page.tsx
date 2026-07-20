@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getMeetings } from "@/lib/meetings-db";
 
-export default function CurrentMeetingPage() {
+export default async function CurrentMeetingPage() {
   const today = new Date();
 
   const dayOfWeek = today.getDay();
@@ -12,7 +12,9 @@ export default function CurrentMeetingPage() {
 
   const isoDate = sunday.toISOString().split("T")[0];
 
-  const meeting = getMeetings().find(
+  const meetings = await getMeetings();
+
+  const meeting = meetings.find(
     (meeting) => meeting.date === isoDate
   );
 
