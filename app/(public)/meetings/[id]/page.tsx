@@ -13,7 +13,13 @@ export default async function MeetingPage({
 }: Props) {
   const { id } = await params;
 
-  const meeting = await getMeetingById(Number(id));
+  const meetingId = Number(id);
+
+  if (Number.isNaN(meetingId)) {
+    notFound();
+  }
+
+  const meeting = await getMeetingById(meetingId);
 
   if (!meeting) {
     notFound();

@@ -99,6 +99,7 @@ export async function createMeeting(
   _prevState: State,
   formData: FormData
 ): Promise<State> {
+
   const validatedFields = MeetingFormSchema.safeParse({
     date: formData.get("date"),
     meetingType: formData.get("meetingType"),
@@ -111,7 +112,7 @@ export async function createMeeting(
     openingPrayer: formData.get("openingPrayer"),
 
     wardBusiness: formData.get("wardBusiness"),
-    stakeBusiness:formData.get("stakeBusiness") === "true",
+    stakeBusiness: formData.get("stakeBusiness") === "true",
 
     sacramentHymnNumber: formData.get("sacramentHymnNumber"),
     sacramentHymnTitle: formData.get("sacramentHymnTitle"),
@@ -125,6 +126,7 @@ export async function createMeeting(
     closingPrayer: formData.get("closingPrayer"),
   });
 
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -132,11 +134,13 @@ export async function createMeeting(
     };
   }
 
+
   const data = validatedFields.data;
+
 
   const meeting: Omit<SacramentMeeting, "id"> = {
     date: data.date,
-    meetingType: data.meetingType ,
+    meetingType: data.meetingType,
     presiding: data.presiding,
     conducting: data.conducting,
 
@@ -150,11 +154,7 @@ export async function createMeeting(
     openingPrayer: data.openingPrayer,
 
     wardBusiness: data.wardBusiness
-      ? [
-          {
-            description: data.wardBusiness,
-          },
-        ]
+      ? [{ description: data.wardBusiness }]
       : [],
 
     stakeBusiness: data.stakeBusiness,
@@ -180,24 +180,30 @@ export async function createMeeting(
     closingPrayer: data.closingPrayer,
   };
 
-    try {
+
+  try {
     await insertMeeting(meeting);
 
-    revalidatePath("/meetings");
+  } catch (error) {
+    console.error("Create meeting failed:", error);
 
-    redirect("/meetings");
-    } catch (error) {
-    console.error(error);
+    return {
+      errors: {},
+      message: "Unable to create meeting. Please try again.",
+    };
+  }
 
-    throw new Error("Unable to create meeting. Please try again.");
-    }
+
+  revalidatePath("/meetings");
+
+  redirect("/meetings");
 }
-
 export async function updateMeeting(
   id: number,
   _prevState: State,
   formData: FormData
 ): Promise<State> {
+
   const validatedFields = MeetingFormSchema.safeParse({
     date: formData.get("date"),
     meetingType: formData.get("meetingType"),
@@ -210,7 +216,7 @@ export async function updateMeeting(
     openingPrayer: formData.get("openingPrayer"),
 
     wardBusiness: formData.get("wardBusiness"),
-    stakeBusiness:formData.get("stakeBusiness") === "true",
+    stakeBusiness: formData.get("stakeBusiness") === "true",
 
     sacramentHymnNumber: formData.get("sacramentHymnNumber"),
     sacramentHymnTitle: formData.get("sacramentHymnTitle"),
@@ -224,6 +230,7 @@ export async function updateMeeting(
     closingPrayer: formData.get("closingPrayer"),
   });
 
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -231,71 +238,79 @@ export async function updateMeeting(
     };
   }
 
+
   const data = validatedFields.data;
 
+
   try {
-        await updateMeetingById(id, {
-        date: data.date,
-        meetingType: data.meetingType,
-        presiding: data.presiding,
-        conducting: data.conducting,
+    await updateMeetingById(id, {
+      date: data.date,
+      meetingType: data.meetingType,
+      presiding: data.presiding,
+      conducting: data.conducting,
 
-        announcements: parseAnnouncements(data.announcements),
+      announcements: parseAnnouncements(data.announcements),
 
-        openingHymn: {
+      openingHymn: {
         number: data.openingHymnNumber,
         title: data.openingHymnTitle,
-            },
+      },
 
-        openingPrayer: data.openingPrayer,
+      openingPrayer: data.openingPrayer,
 
-        wardBusiness: data.wardBusiness
+      wardBusiness: data.wardBusiness
         ? [{ description: data.wardBusiness }]
         : [],
 
-        stakeBusiness: data.stakeBusiness,
+      stakeBusiness: data.stakeBusiness,
 
-        sacramentHymn: {
-            number: data.sacramentHymnNumber,
-            title: data.sacramentHymnTitle,
-            },
+      sacramentHymn: {
+        number: data.sacramentHymnNumber,
+        title: data.sacramentHymnTitle,
+      },
 
-        speakers: [
-            {
-                name: data.speakerName,
-                topic: data.speakerTopic ?? "",
-                type: data.speakerType,
-            },
-            ],
+      speakers: [
+        {
+          name: data.speakerName,
+          topic: data.speakerTopic ?? "",
+          type: data.speakerType,
+        },
+      ],
 
-        closingHymn: {
-            number: data.closingHymnNumber,
-            title: data.closingHymnTitle,
-            },
+      closingHymn: {
+        number: data.closingHymnNumber,
+        title: data.closingHymnTitle,
+      },
 
-         closingPrayer: data.closingPrayer,
+      closingPrayer: data.closingPrayer,
     });
 
-    revalidatePath("/meetings");
+  } catch (error) {
+    console.error("Update meeting failed:", error);
 
-    redirect("/meetings");
-    } catch (error) {
-    console.error(error);
+    return {
+      errors: {},
+      message: "Unable to update meeting. Please try again.",
+    };
+  }
 
-    throw new Error("Unable to update meeting. Please try again.");
-    }
+
+  revalidatePath("/meetings");
+
+  redirect("/meetings");
 }
 
 export async function deleteMeeting(id: number) {
   try {
     await deleteMeetingById(id);
 
-    revalidatePath("/meetings");
+  } catch (error) {
+    console.error("Delete meeting failed:", error);
 
-    redirect("/meetings");
-    } catch (error) {
-        console.error(error);
+    throw new Error("Unable to delete meeting. Please try again.");
+  }
 
-        throw new Error("Unable to delete meeting. Please try again.");
-    }
+  revalidatePath("/meetings");
+
+  redirect("/meetings");
 }

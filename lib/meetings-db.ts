@@ -205,5 +205,7 @@ export async function deleteMeetingById(id: number): Promise<boolean> {
     RETURNING id;
   `;
 
+  console.log("Deleted rows:", rows);
+
   return rows.length > 0;
 }

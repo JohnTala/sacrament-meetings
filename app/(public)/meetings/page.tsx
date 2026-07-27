@@ -1,8 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { getMeetings, getMeetingsTotalPages } from "@/lib/meetings-db";
 import { MeetingSearch } from "@/components/MeetingSearch";
-import {MeetingCard } from "@/components/MeetingCard";
+import { MeetingCard } from "@/components/MeetingCard";
 import { Pagination } from "@/components/Pagination";
 
 export default async function MeetingsPage(props: {
@@ -53,17 +54,28 @@ export default async function MeetingsPage(props: {
           <MeetingSearch />
         </div>
 
-        {/* Results */}
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-slate-800">
-            Available Meetings
-          </h2>
+        {/* Results Header */}
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-800">
+              Available Meetings
+            </h2>
 
-          <span className="text-sm text-gray-500">
-            {meetings.length} meeting{meetings.length !== 1 ? "s" : ""}
-          </span>
+            <p className="mt-1 text-sm text-gray-500">
+              {meetings.length} meeting
+              {meetings.length !== 1 ? "s" : ""} found
+            </p>
+          </div>
+
+          <Link
+            href="/meetings/new"
+            className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700"
+          >
+            + Create Meeting
+          </Link>
         </div>
 
+        {/* Meetings Grid */}
         {meetings.length === 0 ? (
           <div className="rounded-xl bg-white p-12 text-center shadow">
             <h3 className="text-2xl font-semibold text-gray-700">
@@ -83,9 +95,11 @@ export default async function MeetingsPage(props: {
         )}
 
         {/* Pagination */}
-        <div className="mt-12 flex justify-center">
-          <Pagination totalPages={totalPages} />
-        </div>
+        {totalPages > 1 && (
+          <div className="mt-12 flex justify-center">
+            <Pagination totalPages={totalPages} />
+          </div>
+        )}
       </section>
     </main>
   );

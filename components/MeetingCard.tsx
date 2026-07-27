@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { SacramentMeeting } from "@/lib/types";
 import { deleteMeeting } from "@/lib/actions";
+import { DeleteMeetingButton } from "@/components/DeleteMeetingButton";
 
 interface MeetingCardProps {
   meeting: SacramentMeeting;
@@ -12,7 +13,7 @@ export function MeetingCard({
   return (
     <article className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:border-blue-500 hover:shadow-md">
 
-      <Link href={`/meetings/${meeting.id}`}>
+      <Link href={`/meetings/${meeting.id}`}  className="block">
         <div>
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-blue-700">
@@ -56,17 +57,9 @@ export function MeetingCard({
         </Link>
 
         <form action={deleteMeeting.bind(null, meeting.id)}>
-          <button
-            type="submit"
-              onClick={(e) => {
-                  if (!confirm("Delete this meeting?")) {
-                    e.preventDefault();
-                  }
-                }}
-            className="rounded bg-red-600 px-3 py-2 text-white hover:bg-red-700"
-          >
-            Delete
-          </button>
+          <DeleteMeetingButton className="rounded bg-red-600 px-3 py-2 text-white hover:bg-red-700">
+                Delete
+          </DeleteMeetingButton>
         </form>
       </div>
     </article>
