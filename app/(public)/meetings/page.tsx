@@ -23,7 +23,7 @@ export default async function MeetingsPage(props: {
       <section className="relative h-72 md:h-96">
         <Image
           src="/sacrament-meeting.avif"
-          alt="Sacrament Meeting"
+          alt="Sacrament meeting illustration"
           fill
           priority
           className="object-cover"

@@ -1,9 +1,10 @@
 "use client";
 
 import { useActionState } from "react";
+import { State } from "@/lib/form-state";
 
 import type { SacramentMeeting } from "@/lib/types";
-import type { State } from "@/lib/actions";
+
 
 interface MeetingFormProps {
   meeting?: SacramentMeeting;
@@ -28,7 +29,7 @@ export default function MeetingForm({
   );
 
   return (
-    <form action={formAction} className="space-y-8">
+    <form action={formAction}  aria-busy={isPending} className="space-y-8">
 
       {/* Date */}
       <div>
@@ -46,11 +47,13 @@ export default function MeetingForm({
           defaultValue={meeting?.date}
           aria-describedby="date-error"
           className="w-full rounded-md border p-2"
+          required
         />
 
         <div
           id="date-error"
-          aria-live="polite"
+           role="alert"
+            aria-live="polite"
         >
           {state.errors?.date?.map((error) => (
             <p
@@ -89,6 +92,7 @@ export default function MeetingForm({
         <div
           id="meetingType-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.meetingType?.map((error) => (
             <p
@@ -117,11 +121,13 @@ export default function MeetingForm({
           defaultValue={meeting?.presiding}
           aria-describedby="presiding-error"
           className="w-full rounded-md border p-2"
+          required
         />
 
         <div
           id="presiding-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.presiding?.map((error) => (
             <p
@@ -150,11 +156,13 @@ export default function MeetingForm({
           defaultValue={meeting?.conducting}
           aria-describedby="conducting-error"
           className="w-full rounded-md border p-2"
+          required
         />
 
         <div
           id="conducting-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.conducting?.map((error) => (
             <p
@@ -188,6 +196,7 @@ export default function MeetingForm({
         <div
           id="announcements-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.announcements?.map((error) => (
             <p
@@ -217,11 +226,13 @@ export default function MeetingForm({
             defaultValue={meeting?.openingHymn.number}
             aria-describedby="openingHymnNumber-error"
             className="w-full rounded-md border p-2"
+            required
           />
 
           <div
             id="openingHymnNumber-error"
             aria-live="polite"
+             role="alert"
           >
             {state.errors?.openingHymnNumber?.map((error) => (
               <p
@@ -248,11 +259,13 @@ export default function MeetingForm({
             defaultValue={meeting?.openingHymn.title}
             aria-describedby="openingHymnTitle-error"
             className="w-full rounded-md border p-2"
+            required
           />
 
           <div
             id="openingHymnTitle-error"
             aria-live="polite"
+             role="alert"
           >
             {state.errors?.openingHymnTitle?.map((error) => (
               <p
@@ -281,11 +294,13 @@ export default function MeetingForm({
           defaultValue={meeting?.openingPrayer}
           aria-describedby="openingPrayer-error"
           className="w-full rounded-md border p-2"
+          required
         />
 
         <div
           id="openingPrayer-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.openingPrayer?.map((error) => (
             <p
@@ -321,6 +336,7 @@ export default function MeetingForm({
         <div
           id="wardBusiness-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.wardBusiness?.map((error) => (
             <p
@@ -356,6 +372,7 @@ export default function MeetingForm({
         <div
           id="stakeBusiness-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.stakeBusiness?.map((error) => (
             <p
@@ -385,11 +402,13 @@ export default function MeetingForm({
             defaultValue={meeting?.sacramentHymn.number}
             aria-describedby="sacramentHymnNumber-error"
             className="w-full rounded-md border p-2"
+            required
           />
 
           <div
             id="sacramentHymnNumber-error"
             aria-live="polite"
+             role="alert"
           >
             {state.errors?.sacramentHymnNumber?.map((error) => (
               <p
@@ -416,11 +435,13 @@ export default function MeetingForm({
             defaultValue={meeting?.sacramentHymn.title}
             aria-describedby="sacramentHymnTitle-error"
             className="w-full rounded-md border p-2"
+            required
           />
 
           <div
             id="sacramentHymnTitle-error"
             aria-live="polite"
+             role="alert"
           >
             {state.errors?.sacramentHymnTitle?.map((error) => (
               <p
@@ -449,11 +470,13 @@ export default function MeetingForm({
           defaultValue={meeting?.speakers[0]?.name}
           aria-describedby="speakerName-error"
           className="w-full rounded-md border p-2"
+          required
         />
 
         <div
           id="speakerName-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.speakerName?.map((error) => (
             <p
@@ -480,11 +503,13 @@ export default function MeetingForm({
           defaultValue={meeting?.speakers[0]?.topic}
           aria-describedby="speakerTopic-error"
           className="w-full rounded-md border p-2"
+          required
         />
 
         <div
           id="speakerTopic-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.speakerTopic?.map((error) => (
             <p
@@ -519,6 +544,7 @@ export default function MeetingForm({
         <div
           id="speakerType-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.speakerType?.map((error) => (
             <p
@@ -548,11 +574,13 @@ export default function MeetingForm({
             defaultValue={meeting?.closingHymn.number ?? ""}
             aria-describedby="closingHymnNumber-error"
             className="w-full rounded-md border p-2"
+            required
           />
 
           <div
             id="closingHymnNumber-error"
             aria-live="polite"
+             role="alert"
           >
             {state.errors?.closingHymnNumber?.map((error) => (
               <p
@@ -579,11 +607,13 @@ export default function MeetingForm({
             defaultValue={meeting?.closingHymn.title ?? ""}
             aria-describedby="closingHymnTitle-error"
             className="w-full rounded-md border p-2"
+            required
           />
 
           <div
             id="closingHymnTitle-error"
             aria-live="polite"
+             role="alert"
           >
             {state.errors?.closingHymnTitle?.map((error) => (
               <p
@@ -611,11 +641,13 @@ export default function MeetingForm({
           defaultValue={meeting?.closingPrayer ?? ""}
           aria-describedby="closingPrayer-error"
           className="w-full rounded-md border p-2"
+          required
         />
 
         <div
           id="closingPrayer-error"
           aria-live="polite"
+           role="alert"
         >
           {state.errors?.closingPrayer?.map((error) => (
             <p

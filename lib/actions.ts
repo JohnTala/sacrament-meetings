@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { State } from "./form-state";
 
 import {
   insertMeeting,
@@ -14,7 +15,7 @@ import type {
   SacramentMeeting
 } from "@/lib/types";
 
-export const MeetingFormSchema = z.object({
+ const MeetingFormSchema = z.object({
   date: z.string().min(1, "Meeting date is required"),
 
   meetingType: z.enum([
@@ -83,35 +84,7 @@ export const MeetingFormSchema = z.object({
     .min(1, "Closing prayer is required"),
 });
 
-export type State = {
-  errors?: {
-    date?: string[];
-    meetingType?: string[];
-    presiding?: string[];
-    conducting?: string[];
-    announcements?: string[];
 
-    openingHymnNumber?: string[];
-    openingHymnTitle?: string[];
-    openingPrayer?: string[];
-
-    wardBusiness?: string[];
-    stakeBusiness?: string[];
-
-    sacramentHymnNumber?: string[];
-    sacramentHymnTitle?: string[];
-
-    speakerName?: string[];
-    speakerTopic?: string[];
-    speakerType?: string[];
-
-    closingHymnNumber?: string[];
-    closingHymnTitle?: string[];
-    closingPrayer?: string[];
-  };
-
-  message?: string;
-};
 
 function parseAnnouncements(value?: string): string[] {
   if (!value) return [];
@@ -138,7 +111,7 @@ export async function createMeeting(
     openingPrayer: formData.get("openingPrayer"),
 
     wardBusiness: formData.get("wardBusiness"),
-    stakeBusiness: formData.get("stakeBusiness"),
+    stakeBusiness:formData.get("stakeBusiness") === "true",
 
     sacramentHymnNumber: formData.get("sacramentHymnNumber"),
     sacramentHymnTitle: formData.get("sacramentHymnTitle"),
@@ -237,7 +210,7 @@ export async function updateMeeting(
     openingPrayer: formData.get("openingPrayer"),
 
     wardBusiness: formData.get("wardBusiness"),
-    stakeBusiness: formData.get("stakeBusiness"),
+    stakeBusiness:formData.get("stakeBusiness") === "true",
 
     sacramentHymnNumber: formData.get("sacramentHymnNumber"),
     sacramentHymnTitle: formData.get("sacramentHymnTitle"),
