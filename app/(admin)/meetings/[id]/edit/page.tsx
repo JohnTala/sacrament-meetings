@@ -1,3 +1,9 @@
+import { notFound } from "next/navigation";
+
+import MeetingForm from "@/components/MeetingForm";
+import { getMeetingById } from "@/lib/meetings-db";
+import { updateMeeting } from "@/lib/actions";
+
 interface Props {
   params: Promise<{
     id: string;
@@ -9,11 +15,27 @@ export default async function EditMeetingPage({
 }: Props) {
   const { id } = await params;
 
+  const meeting = await getMeetingById(Number(id));
+
+  if (!meeting) {
+    notFound();
+  }
+
+  const updateMeetingWithId = updateMeeting.bind(
+    null,
+    meeting.id
+  );
+
   return (
-    <section>
-      <h2 className="text-3xl font-bold">
-        Edit Meeting #{id} — Coming in Week 04
-      </h2>
+    <section className="mx-auto max-w-4xl p-8">
+      <h1 className="mb-6 text-3xl font-bold">
+        Edit Meeting
+      </h1>
+
+      <MeetingForm
+        meeting={meeting}
+        action={updateMeetingWithId}
+      />
     </section>
   );
 }
