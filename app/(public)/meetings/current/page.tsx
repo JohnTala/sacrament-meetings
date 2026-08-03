@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getMeetings } from "@/lib/meetings-db";
+
+export const metadata: Metadata = {
+  title: "Current Meeting",
+  description:
+    "View the current week's sacrament meeting. If a meeting is scheduled for this Sunday, you will be redirected to its details.",
+};
 
 export default async function CurrentMeetingPage() {
   const today = new Date();

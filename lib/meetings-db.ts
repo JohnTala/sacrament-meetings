@@ -3,7 +3,7 @@ import type { SacramentMeeting } from "./types";
 
 const sql = neon(process.env.DATABASE_URL!);
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 2;
 
 export async function getMeetings(
   query: string = "",

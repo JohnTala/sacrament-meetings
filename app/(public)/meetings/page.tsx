@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -5,6 +6,13 @@ import { getMeetings, getMeetingsTotalPages } from "@/lib/meetings-db";
 import { MeetingSearch } from "@/components/MeetingSearch";
 import { MeetingCard } from "@/components/MeetingCard";
 import { Pagination } from "@/components/Pagination";
+
+export const metadata: Metadata = {
+  title: "Meetings",
+  description:
+    "Browse, search, and view upcoming and past sacrament meetings, including speakers, leaders, hymns, prayers, and meeting details.",
+};
+
 
 export default async function MeetingsPage(props: {
   searchParams?: Promise<{ query?: string; page?: string }>;

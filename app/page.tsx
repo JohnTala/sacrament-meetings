@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Welcome to the Sacrament Meetings application. View and manage ward sacrament meeting schedules, speakers, hymns, and prayers.",
+};
 
 export default function HomePage() {
   return (

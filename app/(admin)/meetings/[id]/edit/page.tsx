@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import MeetingForm from "@/components/MeetingForm";
@@ -8,6 +9,26 @@ interface Props {
   params: Promise<{
     id: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
+  const { id } = await params;
+
+  const meeting = await getMeetingById(Number(id));
+
+  if (!meeting) {
+    return {
+      title: "Meeting Not Found",
+      description: "The requested sacrament meeting could not be found.",
+    };
+  }
+
+  return {
+    title: `Edit Meeting - ${meeting.date}`,
+    description: `Edit the sacrament meeting scheduled for ${meeting.date}, including speakers, hymns, prayers, announcements, and meeting leadership.`,
+  };
 }
 
 export default async function EditMeetingPage({
