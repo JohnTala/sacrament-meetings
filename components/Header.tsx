@@ -4,6 +4,9 @@ import LogoutButton from "./auth/LogoutButton";
 export default async function Header() {
   const session = await auth();
 
+  // Temporary debug
+  console.log("Header session:", session);
+
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
@@ -19,9 +22,13 @@ export default async function Header() {
             Springfield 2nd Ward
           </h1>
 
-          {session?.user && (
+          {session?.user ? (
             <p className="text-sm text-blue-100">
               Welcome, {session.user.name}
+            </p>
+          ) : (
+            <p className="text-sm text-yellow-200">
+              Not signed in
             </p>
           )}
         </div>
